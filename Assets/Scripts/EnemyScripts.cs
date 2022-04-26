@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class EnemyScripts : MonoBehaviour
 {
-    [SerializeField] int startingHealth;
-    [SerializeField] int currentHealth;
+    [SerializeField] int startingHealth;            //Declaring the health
+    [SerializeField] int currentHealth;             //Declaring current health of the enemy
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = startingHealth;
+        currentHealth = startingHealth;         //
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class EnemyScripts : MonoBehaviour
 
     public void DamageMethod(int damageAmount)
     {
-        currentHealth -= damageAmount;
+        currentHealth -= damageAmount;              
         Debug.Log("In damage method");
         if (currentHealth <=0)
         {
