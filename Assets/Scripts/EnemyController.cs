@@ -33,6 +33,7 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        Debug.Log(target);
     }
 
     // Update is called once per frame
@@ -64,6 +65,7 @@ public class EnemyController : MonoBehaviour
 
         if (Vector3.Distance(target.position, this.transform.position) <= 20f)
         {
+            agent.SetDestination(target.position);
             state = STATE.ATTACK;
         }
 

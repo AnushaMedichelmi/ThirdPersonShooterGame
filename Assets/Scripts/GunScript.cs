@@ -43,7 +43,7 @@ public class GunScript : MonoBehaviour
         Debug.DrawRay(firePoint.position, transform.forward*100,Color.red,5f);
         Ray ray = new Ray(firePoint.position, transform.forward);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, 100f))
+        if (Physics.Raycast(ray, out hitInfo, 1000f))
         {
             Debug.Log("In Raycast");
             //need to Shoot the enemy 
