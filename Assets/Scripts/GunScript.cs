@@ -16,6 +16,7 @@ public class GunScript : MonoBehaviour
     public Transform firePoint;
     [SerializeField]
     ParticleSystem particleSystem;
+    public AudioSource audio;
     void Start()
     {
         
@@ -29,6 +30,8 @@ public class GunScript : MonoBehaviour
         {
             if(Input.GetButton("Fire1"))
             {
+                //audio
+                audio.Play();
                 timer = 0f;
                 ToFireGun();
             }
@@ -42,6 +45,7 @@ public class GunScript : MonoBehaviour
         //To add audio source
         Debug.DrawRay(firePoint.position, transform.forward*100,Color.red,5f);
         Ray ray = new Ray(firePoint.position, transform.forward);
+
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, 1000f))
         {
