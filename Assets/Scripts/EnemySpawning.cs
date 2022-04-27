@@ -1,66 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemySpawning : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs;
-    public int number;
-    public float spawnRadius;
-    public bool spawnOnStart = true;
-    Vector3 result;
-    public List<GameObject> enemies = new List<GameObject>();
-    public GameObject temp;
+
+    public static EnemySpawning instance;
+    public GameObject enemyPrefab;
+
+
+    public List<GameObject> Enemy = new List<GameObject>();
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        return;
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        if (spawnOnStart)
-        {
-            CreateAllEnemies();
-        }
+
+        AddToPool();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
     }
-    private void Update()
+    public void AddToPool()
     {
-        for (int i = 0; i < enemies.Count; i++)
+
+        for (int i = 0; i < 10; i++)
         {
-            if (!enemies[i].gameObject.activeInHierarchy)
+
+            GameObject temp = Instantiate(enemyPrefab);
+            
+            Enemy.Add(temp);
+            temp.SetActive(false);
+
+        }
+    }
+
+
+
+    public GameObject EnemiesFromPool()
+    {
+        for (int i = 0; i < Enemy.Count; i++)
+        {
+            if ( !Enemy[i].gameObject.activeInHierarchy)
             {
-                Debug.Log("Enemy");
-                enemies[i].gameObject.SetActive(true);
+                Debug.Log("active");
+                return Enemy[i].gameObject;
+               
             }
         }
-    }
-    private void CreateAllEnemies()
-    {
-        for (int i = 0; i < number; i++)
-        {
-            print("Transform.position = " + transform.position);
-            Vector3 randomPoint = transform.position + Random.insideUnitSphere * spawnRadius;
-            print("Random point = " + randomPoint);
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 10f, NavMesh.AllAreas))
-            {
-                result = hit.position;
-                //print("Result=" +result);
-                temp = Instantiate(enemyPrefabs[0], result, Quaternion.identity);
-                temp.SetActive(false);
-                enemies.Add(temp);
+        return null;
 
-            }
-            else
-                i--;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!spawnOnStart && other.gameObject.tag == "Player")
-        {
-            CreateAllEnemies();
-        }
     }
 
 
